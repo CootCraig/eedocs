@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>My Ubuntu Setup</title>
+    <title>AVR GCC Tool Chain</title>
     <meta name="author" content="Craig H. Anderson">
     <link rel="stylesheet" href="css/reveal.min.css" >
     <link rel="stylesheet" href="css/theme/default.css" id="theme" >
@@ -12,388 +12,69 @@
     <div class="reveal">
       <div class="slides">
         <section>
-          <h3>Ubuntu 12.03 base install using mini.iso</h3>
-          <pre><code contenteditable lang="bash" >
-ubuntu 12.04 mini.iso
-32-bit PC (x86)
-Ubuntu 12.04 "Precise Pangolin" Minimal CD 27MB
-
-Software selection
-[*] OpenSSH server
- ...
-[*] PostgreSQL database
-          </code></pre>
-        </section>
-        <section>
-          <h3>Fixed IP address</h3>
-          <p>Edit /etc/network/interfaces</p>
-          <pre><code contenteditable lang="bash" >
-auto eth0
-iface eth0 inet static
-        address 10.10.10.133
-        netmask 255.255.0.0
-        gateway 10.10.10.100
-        dns-nameservers 10.10.10.111
-          </code></pre>
-        </section>
-        <section>
-          <h3>Set up OpenSSH</h3>
-          <p>Generate key for first user</p>
-          <pre><code contenteditable lang="bash" >
-$ ssh-keygen
-          </code></pre>
-          <div style="margin-bottom:30px;"></div>
-          <p>Install openssh-server</p>
-          <pre><code contenteditable lang="bash" >
-$ sudo apt-get install openssh-server
-          </code></pre>
-          <div style="margin-bottom:30px;"></div>
-          <p>On workstation, copy public key to server for ssh login</p>
-          <pre><code contenteditable lang="bash" >
-$ ssh-copy-id username@host
-          </code></pre>
+          <h3>Standalone slide example</h3>
+          Stand alone slide text
         </section>
         <section>
           <section>
-            <h3>Basic dev. tools: compiler,vim,tmux,git</h3>
-            <p>Compiler and build tools</p>
+            <h3>Building GCC AVR Tool Chain</h3>
             <pre><code contenteditable lang="bash" >
-sudo apt-get install build-essential checkinstall libtool automake uuid-dev
+http://www.nongnu.org/avr-libc/user-manual/install_tools.html
             </code></pre>
-            <p>vim,tmux,git</p>
+            <p>The default behaviour for most of these tools is to install
+            every thing under the /usr/local directory. In order to keep
+            the AVR tools separate from the base system, it is usually
+            better to install everything into /usr/local/avr</p>
+          </section>
+          <section>
+            <h4>Compiling avr-gcc toolchain from scratch</h4>
             <pre><code contenteditable lang="bash" >
-sudo apt-get install vim tmux git
+http://jmanton.wordpress.com/2010/08/08/compiling-avr-gcc-toolchain-from-scratch/
             </code></pre>
-            <p>Personalize git</p>
+            <h4>Building and Installing the GNU Tool Chain</h4>
             <pre><code contenteditable lang="bash" >
-git config --global user.name "Your Name Here"
-# Sets the default name for git to use when you commit
-
-git config --global user.email "your_email@example.com"
-# Sets the default email for git to use when you commit
+http://www.nongnu.org/avr-libc/user-manual/install_tools.html
+            </code></pre>
+            <h4>AVR Freaks - Script for building AVR-GCC 4.5.1 on Linux</h4>
+            <pre><code contenteditable lang="bash" >
+http://www.avrfreaks.net/index.php?name=PNphpBB2&file=viewtopic&t=42631
+            </code></pre>
+            <h4>[Linux][Tools] Suggested tools for AVR use under Linux</h4>
+            <pre><code contenteditable lang="bash" >
+http://www.avrfreaks.net/index.php?name=PNphpBB2&file=viewtopic&p=654163#654163
             </code></pre>
           </section>
           <section>
-            <p>Install the rsa public key on my github account</p>
-            <p>Then clone the vim config and install</p>
+            <h3>Slide Stack example</h3>
             <pre><code contenteditable lang="bash" >
-cd
-git clone git@github.com:CootCraig/dotfiles_again.git
-cd ~/dotfiles_again/linux
-bash install.sh
-            </code></pre>
-          </section>
-        </section>
-        <section>
-          <section>
-            <h3>Arrange for mounting Windows shares</h3>
-            <p>Ubuntu documentation <a href="https://help.ubuntu.com/community/MountWindowsSharesPermanently">here</a></p>
-            <p>Install the needed packages</p>
-            <pre><code contenteditable lang="bash" >
-$ sudo apt-get install cifs-utils winbind
-            </code></pre>
-            <p>Edit /etc/nsswitch.conf</p>
-            <pre><code contenteditable lang="bash" >
-hosts: files dns
-            </code></pre>
-            <p>to</p>
-            <pre><code contenteditable lang="bash" >
-hosts: files wins dns
+code section
+sample
             </code></pre>
           </section>
           <section>
-            <h3>Add the shares to mount</h3>
-            <p>Sample entry in /etc/fstab</p>
-            <pre><code contenteditable lang="bash" >
-$ cat /etc/fstab
-# /etc/fstab: static file system information.
- ...
-//gcs3/f$/GIT /media/gcsgit cifs rw,noauto,credentials=/home/craig/gcsww_canderson.txt,uid=craig 0 0
-            </code></pre>
-            <p>Sample credential file</p>
-            <pre><code contenteditable lang="bash" >
-username=a_user
-password=a_password
-domain=a_domain
-            </code></pre>
-            <p>The mount command</p>
-            <pre><code contenteditable lang="bash" >
-$ sudo mount /media/gcsgit
-            </code></pre>
-          </section>
-        </section>
-        <section>
-          <section>
-            <h3>Rubies - chruby,ruby-build,Java for JRuby</h3>
-            <p>Install a Java for JRuby</p>
-            <p>JDK 8 Early Access Releases can be grabbed from <a href="http://jdk8.java.net/download.html">here</a></p>
-            <p>I extracted the JDK tarball and made a symbolic link</p>
-            <pre><code contenteditable lang="bash" >
-$ ls -l /opt/java
-total 4
-lrwxrwxrwx 1 root root   18 Mar 23 22:05 jdk -> /opt/java/jdk1.8.0
-drwxr-xr-x 8  500  143 4096 Mar  7 04:38 jdk1.8.0
-            </code></pre>
-            <p>Edit /etc/environment to add path for java command</p>
-            <pre><code contenteditable lang="bash" >
-PATH="/opt/java/jdk/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games"
-            </code></pre>
-            <p>sudo resets PATH, override with file in /etc/sudoers.d</p>
-            <pre><code contenteditable lang="bash" >
-Defaults exempt_group=craig
-            </code></pre>
-          </section>
-          <section>
-            <h3>Rubies - chruby,ruby-build,Java for JRuby</h3>
-            <p>Standalone ruby-build, chruby</p>
-            <p>ruby-build from <a href="https://github.com/sstephenson/ruby-build#readme">here</a></p>
-            <pre><code contenteditable lang="bash" >
-git clone git://github.com/sstephenson/ruby-build.git
-cd ruby-build
-            </code></pre>
-            <p>Set PREFIX="/opt/ruby-build" and run install.sh</p>
-            <p>Install rubies to default location for chruby</p>
-            <pre><code contenteditable lang="bash" >
-sudo /opt/ruby-build/bin/ruby-build 1.9.3-p392 /opt/rubies/ruby-1.9.3-p392
-sudo /opt/ruby-build/bin/ruby-build jruby-1.7.3 /opt/rubies/jruby-1.7.3
-            </code></pre>
-          </section>
-          <section>
-            <h3>Rubies - chruby,ruby-build,Java for JRuby</h3>
-            <p>Install chruby from <a href="https://github.com/postmodern/chruby">here</a></p>
-            <p>Follow the installation and setup instructions</p>
-            <p>Better to do checkinstall instead of make install</p>
-            <p>Configure system wide and set default</p>
-            <pre><code contenteditable lang="bash" >
-$ cat /etc/profile.d/chruby.sh
-[ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ] || return
-
-source /usr/local/share/chruby/chruby.sh
-source /usr/local/share/chruby/auto.sh
-chruby jruby-1.7.3
-            </code></pre>
-          </section>
-        </section>
-        <section>
-          <section>
-            <h3>supervisord</h3>
-            <p>Install supervisor with python-pip</p>
-            <pre><code contenteditable lang="bash" >
-sudo apt-get install python-pip
-sudo pip install supervisor
-            </code></pre>
-            <p>Create a directory for supervisor tasks</p>
-            <pre><code contenteditable lang="bash" >
-sudo mkdir /etc/supervisor.d
-            </code></pre>
-          </section>
-          <section>
-            <h3>supervisord</h3>
-            <p>create an init script for supervisord</p>
-            <pre><code contenteditable lang="bash" >
-cd /etc/init.d; sudo cp skeleton supervisord
-$ diff skeleton supervisord
-8,10c8,10
-> # Short-Description: Supervisor: A Process Control System
-> # Description:       Supervisor is a client/server system that allows its users to monitor
-> #                    and control a number of processes on UNIX-like operating systems.
-13c13
-> # Author: Craig Anderson <craig@coot.net>
-19d18
-<
-22,26c21,25
-> DESC="Supervisor: A Process Control System"
-> NAME=supervisord
-> DAEMON=/usr/local/bin/$NAME
-> DAEMON_ARGS="--configuration /etc/supervisord.conf"
-> PIDFILE=/tmp/$NAME.pid
-            </code></pre>
-          </section>
-          <section>
-            <h3>supervisord</h3>
-            <p>Create the supervisor config file</p>
-            <pre><code contenteditable lang="bash" >
-$ echo_supervisord_conf > /etc/supervisord.conf
-            </code></pre>
-            <pre><code contenteditable lang="bash" >
-$ diff supervisord.conf /etc/supervisord.conf
-13,14c13,14
-< ;username=user              ; (default is no username (open server))
-< ;password=123               ; (default is no password (open server))
----
-> username=craig              ; (default is no username (open server))
-> password=banana               ; (default is no password (open server))
-17,19c17,19
-< ;port=127.0.0.1:9001        ; (ip_address:port specifier, *:port for all iface)
-< ;username=user              ; (default is no username (open server))
-< ;password=123               ; (default is no password (open server))
----
-> port=*:9001        ; (ip_address:port specifier, *:port for all iface)
-> username=craig              ; (default is no username (open server))
-> password=banana               ; (default is no password (open server))
-22c22
-< logfile=/tmp/supervisord.log ; (main log file;default $CWD/supervisord.log)
----
-> logfile=/var/log/supervisor/supervisord.log ; (main log file;default $CWD/supervisord.log)
-31c31
-< ;user=chrism                 ; (default is current user, required if root)
----
-> user=daemon                 ; (default is current user, required if root)
-138,139c138,140
-< ;[include]
-< ;files = relative/directory/*.ini
----
-> [include]
-> files = /etc/supervisor.d/*.ini
-            </code></pre>
-          </section>
-          <section>
-            <h3>supervisord</h3>
-            <p>Create the log directory</p>
-            <pre><code contenteditable lang="bash" >
-$ sudo mkdir /var/log/supervisor
-$ sudo chown daemon:daemon /var/log/supervisor
-            </code></pre>
-            <p>Enable the init script</p>
-            <pre><code contenteditable lang="bash" >
-$ sudo update-rc.d supervisord defaults
-            </code></pre>
-          </section>
-        </section>
-        <section>
-          <section>
-            <h3>torquebox</h3>
-            <p>select jruby with chroot</p>
-            <pre><code contenteditable lang="bash" >
-$ chruby jruby-1.7.3
-$ chruby
- * jruby-1.7.3
-   ruby-1.9.3-p392
-            </code></pre>
-          </section>
-          <section>
-            <h3>torquebox</h3>
-            <p>install the gem</p>
-            <pre><code contenteditable lang="bash" >
-$ gem install torquebox-server
-fetching: torquebox-core-2.3.0-java.gem (100%)
- ...
-Successfully installed torquebox-core-2.3.0-java
-Successfully installed torquebox-transactions-2.3.0
-Successfully installed blankslate-2.1.2.4
-Successfully installed torquebox-configure-2.3.0-java
-Successfully installed parslet-1.4.0
-Successfully installed edn-1.0.0
-Successfully installed torquebox-messaging-2.3.0-java
-Successfully installed torquebox-naming-2.3.0-java
-Successfully installed torquebox-rake-support-2.3.0
-Successfully installed torquebox-security-2.3.0-java
-Successfully installed torquebox-web-2.3.0-java
-Successfully installed torquebox-cache-2.3.0-java
-Successfully installed torquebox-stomp-2.3.0
-Successfully installed thor-0.17.0
-Successfully installed torquebox-2.3.0
-Successfully installed torquebox-server-2.3.0-java
-16 gems installed
-            </code></pre>
-          </section>
-          <section>
-            <h3>torquebox</h3>
-            <p>Start torquebox from supervisord</p>
-            <p>/etc/supervisor.d/torquebox.ini</p>
-            <pre><code contenteditable lang="bash" >
-[program:torquebox]
-command=/home/craig/.gem/jruby/1.9.3/bin/torquebox run
-redirect_stderr=true
-stdout_logfile=/var/log/torquebox/torquebox.log
-environment=PATH="/home/craig/.gem/jruby/1.9.3/bin:/opt/rubies/jruby-1.7.3/lib/ruby/gems/shared/bin:/opt/rubies/jruby-1.7.3/bin:/opt/java/jdk/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games",GEM_HOME="/home/craig/.gem/jruby/1.9.3",USER=craig,RUBY_ENGINE=jruby,GEM_ROOT="/opt/rubies/jruby-1.7.3/lib/ruby/gems/shared",GEM_PATH="/home/craig/.gem/jruby/1.9.3:/opt/rubies/jruby-1.7.3/lib/ruby/gems/shared",RUBY_ROOT="/opt/rubies/jruby-1.7.3",RUBY_VERSION="1.9.3"
-            </code></pre>
-          </section>
-        </section>
-        <section>
-          <h3>PostgreSQL remote access</h3>
-          <pre><code contenteditable lang="bash" >
-$ cd /etc/postgresql/9.1/main
-          </code></pre>
-          <pre><code contenteditable lang="bash" >
-$ diff postgresql.conf.orig postgresql.conf
-62a63
-> listen_addresses = '*'
-          </code></pre>
-
-          <pre><code contenteditable lang="bash" >
-$ sudo diff pg_hba.conf.orig pg_hba.conf
-92c92
-< host    all             all             127.0.0.1/32            md5
----
-> host    all             all             10.10.0.0/16            md5
-          </code></pre>
-          <pre><code contenteditable lang="bash" >
-sudo -u postgres psql template1
-ALTER USER postgres with encrypted password 'your_password';
-          </code></pre>
-          <pre><code contenteditable lang="bash" >
-$ sudo /etc/init.d/postgres restart
-          </code></pre>
-        </section>
-        <section>
-          <section>
-            <h3>VirtualBox Host and Guest</h3>
-            <p>
-            Tue May 21 12:27:22 MDT 2013 -
-            I installed Lubuntu 13.04 with desktop on my HP Envy 17 notebook.
-            An attempt to use KVM/Qemu was abandoned, because the guest video
-            was flakey and crashing the guest VM's.
-            </p>
-            <p>
-            I installed Lubuntu 13.04 again and then installed VirtualBox.
-            VirtualBox guests are working nicely.
-            </p>
-          </section>
-          <section>
-            <h3>Cloning VM's</h3>
-            <p>The VirtualBox admin will clone VM's. Initiate the clone.</p>
-            <img src="Initiate_a_vm_clone.png" height="70%" width="70%" />
-          </section>
-          <section>
-            <h3>Cloning VM's</h3>
-            <p>Make sure to have all network interface get a new MAC</p>
-            <img src="vm_clone_mac_address.png" height="50%" width="50%" />
-          </section>
-          <section>
-            <h3>Reboot the new guest and</h3>
-            <h4>Install the guest additions</h4>
+            <h3>AVR Libc</h3>
+            <a href="http://www.nongnu.org/avr-libc/">AVR Libc Home Page</a>
             <ul>
-              <li>virtualbox-guest-dkms - x86 virtualization solution - guest addition module source for dkms</li>
-              <li>virtualbox-guest-utils - x86 virtualization solution - non-X11 guest utilities</li>
-              <li>virtualbox-guest-x11 - x86 virtualization solution - X11 guest utilities</li>
+              <li>AVR Libc is a Free Software project whose goal is to provide a high
+              quality C library for use with GCC on Atmel AVR microcontrollers.</li>
+
+              <li>Together, avr-binutils, avr-gcc, and avr-libc form the heart of the Free
+              Software toolchain for the Atmel AVR microcontrollers.</li>
+
+              <li>They are further accompanied by projects for in-system programming
+              software (avrdude), simulation (simulavr) and debugging (avr-gdb,AVaRICE).</li>
             </ul>
           </section>
           <section>
-            <h3>Reboot the new guest and</h3>
-            <h4>Change the hostname</h4>
-            <p>Edit /etc/hostname and /etc/hosts</p>
-            <h4>Change the OpenSSH host key</h4>
+            <h3>avr-libc Source Page</h3>
+            <a href="http://savannah.nongnu.org/projects/avr-libc/">Link</a>
+            <p>avr-libc-1.7.1 has been released on 2011-02-16.</p>
             <pre><code contenteditable lang="bash" >
-sudo rm /etc/ssh/*key*
-sudo dpkg-reconfigure openssh-server
-            </code></pre>
-            <h4>Change the user ssh key</h4>
-            <pre><code contenteditable lang="bash" >
-rm -rf ~/.ssh
-ssh-keygen
+http://download.savannah.gnu.org/releases/avr-libc/avr-libc-1.7.1.tar.bz2
             </code></pre>
           </section>
           <section>
-            <h3>Sharing Host Folders</h3>
-            <pre><code contenteditable lang="bash" >
-In a Linux guest, use the following command:
-
-mount -t vboxsf [-o OPTIONS] sharename mountpoint
-To mount a shared folder during boot, add the following entry to /etc/fstab:
-
-sharename   mountpoint   vboxsf   defaults  0   0
-            </code></pre>
+            <h3>avr binutils ?</h3>
           </section>
         </section>
       </div>
