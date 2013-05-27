@@ -65,6 +65,11 @@ sample
               software (avrdude), simulation (simulavr) and debugging (avr-gdb,AVaRICE).</li>
             </ul>
           </section>
+http://jmanton.wordpress.com/2010/08/08/compiling-avr-gcc-toolchain-from-scratch/
+http://www.nongnu.org/avr-libc/user-manual/install_tools.html
+          <section>
+            <h3>PREFIX=/opt/avr - AVR toolchain installation folder</h3>
+          </section>
           <section>
             <h3>avr-libc Source Page</h3>
             <a href="http://savannah.nongnu.org/projects/avr-libc/">Link</a>
@@ -75,6 +80,22 @@ http://download.savannah.gnu.org/releases/avr-libc/avr-libc-1.7.1.tar.bz2
           </section>
           <section>
             <h3>avr binutils ?</h3>
+            <pre><code contenteditable lang="bash" >
+http://ftp.gnu.org/gnu/binutils
+http://ftp.gnu.org/gnu/binutils/binutils-2.23.2.tar.gz
+http://gcc.petsads.us/releases/gcc-4.8.0/gcc-4.8.0.tar.bz2
+            </code></pre>
+http://savannah.nongnu.org/projects/avrdude
+AVRDUDE 5.11 relesed
+http://download.savannah.gnu.org/releases/avrdude/avrdude-5.11.1.tar.gz
+
+avrdude-5.11.1
+avr-libc-1.7.1
+binutils-2.23.2
+gcc-4.8.0
+
+../configure --prefix=/opt/avr --target=avr --disable-nls --disable-werror
+
           </section>
         </section>
       </div>
